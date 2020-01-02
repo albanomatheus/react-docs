@@ -1,11 +1,30 @@
-function Example() {
-	const [count, setCount] = React.useState(0);
-	return (
-		<div>
-			<p>You clicked {count} times</p>
-			<button onClick={() => setCount(count + 1)}>Click me</button>
-		</div>
-	);
+const { useState, useEffect } = React;
+
+function Tick() {
+  const [currentTime, updateTime] = useState(new Date().toLocaleTimeString());
+
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      updateTime(new Date().toLocaleTimeString());
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    setCount(count + 1);
+    return () => console.log("oi");
+  }, [currentTime]);
+
+  return (
+    <p>
+      {currentTime} atualizei {count}x
+    </p>
+  );
 }
 
-ReactDOM.render(<Example />, document.getElementById("root"));
+ReactDOM.render(<Tick />, document.getElementById("root"));
