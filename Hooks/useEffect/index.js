@@ -2,7 +2,6 @@ const { useState, useEffect } = React;
 
 function Tick() {
   const [currentTime, updateTime] = useState(new Date().toLocaleTimeString());
-
   const [count, setCount] = useState(0);
 
   useEffect(() => {
