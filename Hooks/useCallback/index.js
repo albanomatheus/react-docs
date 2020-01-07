@@ -2,12 +2,12 @@ const { useState, useRef, memo, useCallback } = React;
 
 const useCountRenders = () => {
   const renders = useRef(0);
-  console.log("renders: ", renders.current++);
+  console.log(`renders: ${renders.current++} times`);
 };
 
-const Hello = memo(({ increment }) => {
+const Counter = memo(({ increment }) => {
   useCountRenders();
-  return <button onClick={() => increment(5)}>hello</button>;
+  return <button onClick={() => increment(5)}>click me</button>;
 });
 
 const App = () => {
@@ -21,8 +21,8 @@ const App = () => {
 
   return (
     <div>
-      <Hello increment={increment} />
       <div>count: {count}</div>
+      <Counter increment={increment} />
     </div>
   );
 };
