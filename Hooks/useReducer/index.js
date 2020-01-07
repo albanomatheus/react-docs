@@ -1,26 +1,50 @@
-const { useReducer } = React;
-
-const initialState = { count: 0 };
+const { useState, useReducer } = React;
 
 function reducer(state, action) {
   switch (action.type) {
-    case "increment":
-      return { count: state.count + 1 };
-    case "decrement":
-      return { count: state.count - 1 };
+    case "add-todo":
+      return { todos: [...state.todos, { task: action.todo, done: false }] };
+    case "toogle-todo":
+      return {
+        todos: state.todos.map((todo, idx) =>
+          idx === action.idx ? { ...todo, done: !todo.done } : todo
+        )
+      };
     default:
-      throw new Error();
+      return state;
   }
 }
 
 function Counter() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [{ todos }, dispatch] = useReducer(reducer, { todos: [] });
+  const [task, setTask] = useState("");
+
   return (
-    <>
-      Count: {state.count}
-      <button onClick={() => dispatch({ type: "decrement" })}>-</button>
-      <button onClick={() => dispatch({ type: "increment" })}>+</button>
-    </>
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        dispatch({ type: "add-todo", todo: task });
+        setTask("");
+      }}
+    >
+      <input value={task} onChange={e => setTask(e.target.value)} />
+
+      {todos.map((todo, idx) => {
+        return (
+          <div
+            key={idx}
+            onClick={() => dispatch({ type: "toogle-todo", idx })}
+            style={{
+              cursor: "pointer",
+              textDecoration: todo.done ? "line-through" : "",
+              color: todo.done ? "gray" : "black"
+            }}
+          >
+            {`${idx} - ${todo.task}`}
+          </div>
+        );
+      })}
+    </form>
   );
 }
 
