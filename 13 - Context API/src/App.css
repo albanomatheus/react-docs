@@ -1,0 +1,21 @@
+.App {
+  text-align: center;
+}
+
+nav {
+  width: 100%;
+  min-height: 80px;
+  background-color: coral;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.movie-container {
+  margin: 10px;
+}
+
+.movie-container strong {
+  font-size: 20px;
+}
